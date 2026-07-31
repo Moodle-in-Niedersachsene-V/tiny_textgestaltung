@@ -58,13 +58,22 @@ const getPluginSettings = (options) => {
 export const configure = (instanceConfig, options) => {
     const settings = getPluginSettings(options);
 
-    // Eigener Schriftart-Button plus native Elemente fuer Groesse und Farben.
-    const toolbarItems = [buttonName, 'fontsize', 'forecolor', 'backcolor'];
+    // Eigener Schriftart-Button plus native Elemente; Farben je nach Schalter.
+    const toolbarItems = [buttonName, 'fontsize'];
+    const menuItems = [menuItemName, 'fontsize'];
+
+    if (settings.textcolorenabled) {
+        toolbarItems.push('forecolor');
+        menuItems.push('forecolor');
+    }
+    if (settings.backgroundcolorenabled) {
+        toolbarItems.push('backcolor');
+        menuItems.push('backcolor');
+    }
 
     const override = {
         toolbar: addToolbarButtons(instanceConfig.toolbar, 'formatting', toolbarItems),
-        menu: addMenubarItem(instanceConfig.menu, 'format',
-            [menuItemName, 'fontsize', 'forecolor', 'backcolor'].join(' ')),
+        menu: addMenubarItem(instanceConfig.menu, 'format', menuItems.join(' ')),
     };
 
     // Schriftgroessen aus den Plugin-Einstellungen.
@@ -73,10 +82,26 @@ export const configure = (instanceConfig, options) => {
         override.font_size_formats = settings.fontsizes;
     }
 
-    // Farbpalette aus den Plugin-Einstellungen.
-    if (settings.colormap && settings.colormap.length) {
+    // Getrennte Paletten fuer Text- und Hintergrundfarbe.
+    if (settings.textcolors && settings.textcolors.length) {
         // eslint-disable-next-line camelcase
-        override.color_map = settings.colormap;
+        override.color_map_foreground = settings.textcolors;
+    }
+    if (settings.backgroundcolors && settings.backgroundcolors.length) {
+        // eslint-disable-next-line camelcase
+        override.color_map_background = settings.backgroundcolors;
+    }
+
+    // Plugin-Farben auch fuer Tabellenrahmen und Zellenhintergrund.
+    if (settings.usefortable) {
+        if (settings.textcolors && settings.textcolors.length) {
+            // eslint-disable-next-line camelcase
+            override.table_border_color_map = settings.textcolors;
+        }
+        if (settings.backgroundcolors && settings.backgroundcolors.length) {
+            // eslint-disable-next-line camelcase
+            override.table_background_color_map = settings.backgroundcolors;
+        }
     }
 
     // Eigene Farbwahl (Pipette) zulassen.

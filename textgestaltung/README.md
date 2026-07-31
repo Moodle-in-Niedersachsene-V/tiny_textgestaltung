@@ -12,7 +12,7 @@ bereitstellt. Freier Ersatz für die kostenpflichtig gewordenen Plugins
 - **Schriftgröße, Textfarbe, Hintergrundfarbe:** über die nativen,
   von Moodle standardmäßig ausgeblendeten TinyMCE-Elemente –
   Größenliste und Farbpalette über die Plugin-Einstellungen konfigurierbar,
-  freie Farbwahl (Pipette) inklusive
+  freie Farbwahl über einen Farbwähler-Dialog mit Hex-Eingabe inklusive
 - Alle Elemente erscheinen in der Werkzeugleiste (Formatierungsgruppe)
   **und** im Format-Menü
 - Speichert keine personenbezogenen Daten (Null-Privacy-Provider)
@@ -41,8 +41,12 @@ Times New Roman="Times New Roman", serif
 8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt
 ```
 
-**Farbpalette** – eine Farbe pro Zeile, `Name=#RRGGBB` (gilt für Text-
-und Hintergrundfarbe):
+**Farbpaletten** – getrennt für Textfarbe und Hintergrundfarbe, je eine
+Farbe pro Zeile als `Name=#RRGGBB`; beide Paletten einzeln aktivierbar.
+Optional werden Textfarben als Tabellenrahmen- und Hintergrundfarben als
+Zellenhintergrund in den Tabellenwerkzeugen angeboten. Ein CSS-Klassen-Modus
+(wie in tiny_fontcolor) wird bewusst nicht angeboten, da er die Übertragung
+von Inhalten zwischen Instanzen erschwert:
 
 ```
 Rot=#C00000

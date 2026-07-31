@@ -42,11 +42,40 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     ));
 
+    $settings->add(new admin_setting_configcheckbox(
+        'tiny_textgestaltung/textcolorenabled',
+        get_string('textcolorenabled', 'tiny_textgestaltung'),
+        get_string('textcolorenabled_desc', 'tiny_textgestaltung'),
+        1
+    ));
+
     $settings->add(new admin_setting_configtextarea(
-        'tiny_textgestaltung/colorlist',
-        get_string('colorlist', 'tiny_textgestaltung'),
-        get_string('colorlist_desc', 'tiny_textgestaltung'),
+        'tiny_textgestaltung/textcolorlist',
+        get_string('textcolorlist', 'tiny_textgestaltung'),
+        get_string('textcolorlist_desc', 'tiny_textgestaltung'),
         \tiny_textgestaltung\plugininfo::get_default_colorlist(),
         PARAM_RAW
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'tiny_textgestaltung/backgroundcolorenabled',
+        get_string('backgroundcolorenabled', 'tiny_textgestaltung'),
+        get_string('backgroundcolorenabled_desc', 'tiny_textgestaltung'),
+        1
+    ));
+
+    $settings->add(new admin_setting_configtextarea(
+        'tiny_textgestaltung/backgroundcolorlist',
+        get_string('backgroundcolorlist', 'tiny_textgestaltung'),
+        get_string('backgroundcolorlist_desc', 'tiny_textgestaltung'),
+        \tiny_textgestaltung\plugininfo::get_default_colorlist(),
+        PARAM_RAW
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'tiny_textgestaltung/usefortable',
+        get_string('usefortable', 'tiny_textgestaltung'),
+        get_string('usefortable_desc', 'tiny_textgestaltung'),
+        1
     ));
 }

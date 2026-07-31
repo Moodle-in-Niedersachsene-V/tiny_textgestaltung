@@ -47,10 +47,14 @@ class plugininfo extends plugin implements
      */
     public static function get_default_fontlist(): string {
         return "Arial=Arial, sans-serif\n" .
-               "Times New Roman=\"Times New Roman\", serif\n" .
                "Verdana=Verdana, sans-serif\n" .
+               "Tahoma=Tahoma, sans-serif\n" .
+               "Trebuchet MS=\"Trebuchet MS\", sans-serif\n" .
+               "Times New Roman=\"Times New Roman\", serif\n" .
                "Georgia=Georgia, serif\n" .
-               "Courier New=\"Courier New\", monospace";
+               "Garamond=Garamond, serif\n" .
+               "Courier New=\"Courier New\", monospace\n" .
+               "Brush Script MT=\"Brush Script MT\", cursive";
     }
 
     /**
@@ -120,7 +124,11 @@ class plugininfo extends plugin implements
         return [
             'fonts' => self::get_fonts(),
             'fontsizes' => self::get_fontsizes(),
-            'colormap' => self::get_colormap(),
+            'textcolors' => self::get_colormap('textcolorlist'),
+            'backgroundcolors' => self::get_colormap('backgroundcolorlist'),
+            'textcolorenabled' => (bool) get_config('tiny_textgestaltung', 'textcolorenabled'),
+            'backgroundcolorenabled' => (bool) get_config('tiny_textgestaltung', 'backgroundcolorenabled'),
+            'usefortable' => (bool) get_config('tiny_textgestaltung', 'usefortable'),
         ];
     }
 
@@ -183,15 +191,16 @@ class plugininfo extends plugin implements
     }
 
     /**
-     * Liest und validiert die Farbpalette aus der Konfiguration.
+     * Liest und validiert eine Farbpalette aus der Konfiguration.
      *
      * Format der Einstellung: eine Farbe pro Zeile als "Name=#RRGGBB".
      * Rueckgabe im TinyMCE-color_map-Format: [hex, name, hex, name, ...].
      *
+     * @param string $setting Name der Einstellung (textcolorlist|backgroundcolorlist)
      * @return array
      */
-    protected static function get_colormap(): array {
-        $raw = get_config('tiny_textgestaltung', 'colorlist');
+    protected static function get_colormap(string $setting): array {
+        $raw = get_config('tiny_textgestaltung', $setting);
         if ($raw === false || trim($raw) === '') {
             $raw = self::get_default_colorlist();
         }
