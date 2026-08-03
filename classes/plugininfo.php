@@ -36,10 +36,9 @@ use editor_tiny\plugin_with_menuitems;
  * Bindet Schriftart, Schriftgroesse und Schriftfarben in den Tiny-Editor ein.
  */
 class plugininfo extends plugin implements
-        plugin_with_buttons,
-        plugin_with_menuitems,
-        plugin_with_configuration {
-
+    plugin_with_buttons,
+    plugin_with_configuration,
+    plugin_with_menuitems {
     /**
      * Standardliste web-sicherer Schriftarten (Anzeigename=CSS-Wert je Zeile).
      *

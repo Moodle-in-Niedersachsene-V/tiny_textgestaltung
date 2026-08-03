@@ -29,7 +29,6 @@ namespace tiny_textgestaltung\privacy;
  * Dieses Plugin speichert keine personenbezogenen Daten.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
-
     /**
      * Begruendung, warum keine Daten gespeichert werden.
      *

@@ -23,8 +23,6 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Fuehrt die Upgrade-Schritte aus.
  *
@@ -32,7 +30,6 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool
  */
 function xmldb_tiny_textgestaltung_upgrade($oldversion): bool {
-
     if ($oldversion < 2026073005) {
         // Fruehe Builds lieferten eine 5er-Schriftliste als Standard aus,
         // die bei der Installation gespeichert wurde. Steht im Feld noch
@@ -50,9 +47,11 @@ function xmldb_tiny_textgestaltung_upgrade($oldversion): bool {
             // Zeilenenden normalisieren (Textareas liefern ggf. \r\n).
             $normalised = trim(str_replace("\r\n", "\n", $current));
             if ($normalised === $olddefault) {
-                set_config('fontlist',
+                set_config(
+                    'fontlist',
                     \tiny_textgestaltung\plugininfo::get_default_fontlist(),
-                    'tiny_textgestaltung');
+                    'tiny_textgestaltung'
+                );
             }
         }
 
