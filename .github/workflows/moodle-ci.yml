@@ -1,0 +1,67 @@
+##############################################################################
+# GitHub Actions Workflow fuer Moodle-Plugin-Pruefung
+# Moodle in Niedersachsen e. V.
+#
+# Plugin: tiny_textgestaltung
+# Ablage: .github/workflows/moodle-ci.yml
+#
+# Angepasst: kein templates/, kein tests/ vorhanden, daher ohne
+# mustache-, phpunit- und behat-Schritt. amd/ ist vorhanden, grunt bleibt.
+##############################################################################
+
+name: Moodle Plugin CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: 'postgres'
+          POSTGRES_HOST_AUTH_METHOD: 'trust'
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MYSQL_USER: 'root'
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+          MYSQL_CHARACTER_SET_SERVER: "utf8mb4"
+          MYSQL_COLLATION_SERVER: "utf8mb4_unicode_ci"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.3'
+            moodle-branch: 'MOODLE_500_STABLE'
+            database: 'mariadb'
+          - php: '8.4'
+            moodle-branch: 'MOODLE_501_STABLE'
+            database: 'pgsql'
+
+    steps:
+      - name: Plugin-Quellcode auschecken
+        uses: actions/checkout@v4
