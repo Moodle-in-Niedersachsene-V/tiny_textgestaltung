@@ -118,3 +118,11 @@ jobs:
       - name: Grunt (JS/CSS-Lint, AMD-Build-Abgleich)
         if: ${{ !cancelled() }}
         run: moodle-plugin-ci grunt --max-lint-warnings 0
+
+        - name: Erzeugte AMD-Build-Dateien bereitstellen
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: amd-build-${{ matrix.php }}
+          path: moodle/public/lib/editor/tiny/plugins/textgestaltung/amd/build/
+          if-no-files-found: warn
