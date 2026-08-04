@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tiny_textgestaltung';
-$plugin->version   = 2026073006;
+$plugin->version   = 2026073007;
 $plugin->requires  = 2025041400;
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = 'v1.0.0 (Build 2026073006)';
+$plugin->release   = 'v1.0.0 (Build 2026073007)';
